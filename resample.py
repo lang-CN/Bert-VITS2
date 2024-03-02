@@ -52,7 +52,6 @@ if __name__ == "__main__":
     pool = Pool(processes=processes)
 
     tasks = []
-
     for dirpath, _, filenames in os.walk(args.in_dir):
         # 子级目录
         spk_dir = os.path.relpath(dirpath, args.in_dir)
