@@ -17,8 +17,8 @@ train_modle_name_dir="${train_modle_dir}/${train_modle_name}"
 if [ ! -d ${train_modle_name_dir} ];then
     echo "训练模型的数据集 ${train_modle_name_dir} \n"
     cd $project_dir \
-    && mkdir data \
-    && cd $train_modle_dir \
+    && mkdir data 
+    cd $train_modle_dir \
     && git clone https://oauth2:${MY_TOKEN}@www.modelscope.cn/datasets/langll1990/${train_clone_git_modle_name}.git \
     && mv $train_clone_git_modle_name $train_modle_name \
     && cd $train_modle_name \
@@ -63,9 +63,28 @@ else
     echo "已进行重新采样 ${resample_out} \n"
 fi
 
+
 # 执行步骤5：preprocess_text.py 分割训练集和验证数据集
-cd $project_dir \
-&& python preprocess_text.py
+genshin_out_file="${project_dir}/data/filelists/genshin_out.txt"
+if [ ! -f "${genshin_out_file}" ];then
+    echo "不存在 genshin_out ${genshin_out_file} 移动配置文件到 data中\n"
+    cd $project_dir \
+    && cd data \
+    && mkdir filelists 
+    cd $project_dir \
+    && cp filelists/genshin_out.txt $genshin_out_file 
+else
+    echo "存在 genshin_out ${genshin_out_file} 移动配置文件到 data中 \n"
+fi
+
+train_out_file="${project_dir}/data/filelists/train.list"
+if [ ! -f "${train_out_file}" ];then
+    echo "不存在 train_out_file ${train_out_file} \n"
+    cd $project_dir \
+    && python preprocess_text.py
+else
+    echo "存在 train_out_file ${train_out_file} \n"
+fi
 
 # 执行步骤5： 生成pt文件
 
@@ -79,5 +98,5 @@ else
 fi
 
 
-# cd $project_dir \
-# && python bert_gen.py
+cd $project_dir \
+&& python bert_gen.py
