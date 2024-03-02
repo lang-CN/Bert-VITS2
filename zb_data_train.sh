@@ -53,7 +53,7 @@ else
     echo "已存在-汇总标记数据文件 ${project_dir}/${filelists_file} \n"
 fi
 
-
+# 执行步骤3：重新采集样本
 resample_out="data/audios/wavs"
 if [ ! -d "${project_dir}/${resample_out}" ];then
     echo "未进行重新采样 ${resample_out} \n"
@@ -62,3 +62,7 @@ if [ ! -d "${project_dir}/${resample_out}" ];then
 else
     echo "已进行重新采样 ${resample_out} \n"
 fi
+
+# 执行步骤4： 生成pt文件
+cd $project_dir \
+&& python bert_gen.py
