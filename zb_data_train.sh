@@ -97,6 +97,13 @@ else
     echo "存在 配置文件 ${data_config} 移动配置文件到 data中 \n"
 fi
 
-
-cd $project_dir \
-&& python bert_gen.py
+# train_modle_name="cxj"
+# find . -type f  -name "*.bert.pt" -delete 删除重新生成 测试
+bert_pt_file="${project_dir}/raw/${train_modle_name}/${train_modle_name}_0.bert.pt"
+if [ ! -f "${bert_pt_file}" ];then
+    echo "不存在 bert_pt_file ${bert_pt_file} \n"
+    cd $project_dir \
+    && python bert_gen.py
+else
+    echo "存在 bert_pt_file ${bert_pt_file} \n"
+fi
