@@ -26,6 +26,15 @@ chmod 777 /mnt/workspace/Bert-VITS2/zb_data_train.sh
 /mnt/workspace/Bert-VITS2/zb_data_train.sh
 ```
 
+## 执行 训练train.sh
+```
+# 授权
+chmod 777 /mnt/workspace/Bert-VITS2/train.sh
+
+#执行
+/mnt/workspace/Bert-VITS2/train.sh
+```
+
 ## 说明
 
 去掉了 其他语言，只训练了 中文
