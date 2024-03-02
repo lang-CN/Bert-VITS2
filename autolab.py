@@ -4,14 +4,14 @@ import librosa
 from scipy.io import wavfile
 import numpy as np
 import whisper
+import argparse
 
-a="ll" # 请在这里修改说话人的名字，目前只支持中文语音,将音频放在data/ll下
 
 def split_long_audio(model, filepaths, save_dir="data_dir", out_sr=44100):
     files=os.listdir(filepaths)
     filepaths=[os.path.join(filepaths,i)  for i in files]
 
-    i=0
+    wav_index=0
     for file_idx, filepath in enumerate(filepaths):
 
         save_path = Path(save_dir)
@@ -33,8 +33,8 @@ def split_long_audio(model, filepaths, save_dir="data_dir", out_sr=44100):
             start_time = seg['start']
             end_time = seg['end']
             wav_seg = wav2[int(start_time * out_sr):int(end_time * out_sr)]
-            wav_seg_name = f"{a}_{i}.wav" # 修改名字
-            i+=1
+            wav_seg_name = f"{a}_{wav_index}.wav" # 修改名字
+            wav_index+=1
             out_fpath = save_path / wav_seg_name
             wavfile.write(out_fpath, rate=out_sr, data=(wav_seg * np.iinfo(np.int16).max).astype(np.int16))
 
@@ -57,6 +57,19 @@ def transcribe_one(audio_path): # 使用whisper语音识别
     return result.text 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-d",
+        "--data",
+        type=str,
+        help="数据集，模型简称",
+        default="cxj",
+    )
+     # 请在这里修改说话人的名字，目前只支持中文语音,将音频放在data/cxj下 -d 参数
+    args = parser.parse_args()
+    print(f"训练使用的数据集data下的{args.data}")
+    a=args.data
+
     whisper_size = "medium"
     model = whisper.load_model(whisper_size)
     audio_path = f"./raw/{a}"

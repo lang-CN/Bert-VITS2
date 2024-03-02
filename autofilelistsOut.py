@@ -1,9 +1,8 @@
 import os
+import argparse
 
-out_file = f"filelists/genshin_out.txt"
-def process():
+def process(out_file, ch_name):
     with open(out_file,'w' , encoding="Utf-8") as wf:
-        ch_name = 'nxt'
         ch_language = 'ZH'
         path = f"./raw/{ch_name}"
         files = os.listdir(path)
@@ -15,4 +14,21 @@ def process():
                     wf.write(f"{result}\n")
 
 if __name__ == "__main__":
-    process()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-f",
+        "--file",
+        type=str,
+        help="标注汇总文件",
+        default="filelists/genshin_out.txt",
+    )
+    parser.add_argument(
+        "-mjc",
+        "--modlejc",
+        type=str,
+        help="模型简称",
+        default="cxj",
+    )
+    args = parser.parse_args()
+    print(f"标注汇总文件 {args.file}, 模型简称{args.modlejc}")
+    process(args.file, args.modlejc)
