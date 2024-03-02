@@ -63,6 +63,21 @@ else
     echo "已进行重新采样 ${resample_out} \n"
 fi
 
-# 执行步骤4： 生成pt文件
+# 执行步骤5：preprocess_text.py 分割训练集和验证数据集
 cd $project_dir \
-&& python bert_gen.py
+&& python preprocess_text.py
+
+# 执行步骤5： 生成pt文件
+
+data_config="${project_dir}/data/config.json"
+if [ ! -f "${data_config}" ];then
+    echo "不存在 配置文件 ${data_config} 移动配置文件到 data中\n"
+    cd $project_dir \
+    && cp configs/config.json $data_config 
+else
+    echo "存在 配置文件 ${data_config} 移动配置文件到 data中 \n"
+fi
+
+
+# cd $project_dir \
+# && python bert_gen.py
