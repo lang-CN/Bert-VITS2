@@ -9,10 +9,10 @@ Python 3.11.5
 #设置 token 下载 modelscope 中自己的模型
 export MODELSCOPE_OAUTH2_TOKEN="*********"
 # 授权
-chmod 777 /mnt/workspace/env.sh
+chmod 777 /mnt/workspace/Bert-VITS2/env.sh
 
 #执行
-/mnt/workspace/env.sh
+/mnt/workspace/Bert-VITS2/env.sh
 
 ```
 
